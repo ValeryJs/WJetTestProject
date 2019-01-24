@@ -1,8 +1,6 @@
 import BaseTable from "../../components/BaseTable";
 
 import {activities} from "../../models/activities";
-import {contacts} from "../../models/contacts";
-import {activitytypes} from "../../models/activitytypes";
 
 
 export default class ActivitiesDatatable extends BaseTable {
@@ -17,7 +15,7 @@ export default class ActivitiesDatatable extends BaseTable {
 					sort: "string"
 				},
 				{
-					id: "activityDate",
+					id: "DueDate",
 					header: ["Due date", {content: "datepickerFilter"}],
 					sort: "date",
 					format: webix.i18n.longDateFormatStr,
@@ -43,24 +41,6 @@ export default class ActivitiesDatatable extends BaseTable {
 	}
 
 	init(view) {
-		webix.promise.all([
-			activities.waitData,
-			activitytypes.waitData,
-			contacts.waitData
-		]).then(() => {
-			view.sync(activities, function() {
-				this.each((item) => {
-					const type = activitytypes.getItem(item.TypeID);
-					const contact = contacts.getItem(item.ContactID);
-
-					const parser = webix.Date.strToDate("%d-%m-%Y %h:%i");
-					const date = parser(item.DueDate);
-
-					item.activityDate = date;
-					item.typeValue = type.Value;
-					item.contactUser = `${contact.FirstName} ${contact.LastName}`;
-				});
-			});
-		});
+		view.sync(activities);
 	}
 }

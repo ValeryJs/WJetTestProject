@@ -4,7 +4,7 @@ export default class TopView extends JetView {
 	config() {
 		const header = {
 			view: "toolbar",
-			css:"webix_dark",
+			css: "webix_dark",
 			cols: [
 				{ width: 150 },
 				{

@@ -1,6 +1,5 @@
 import {JetView} from "webix-jet";
 
-
 export default class BaseTable extends JetView {
 	constructor(app, name, configs) {
 		super(app, name);
@@ -15,9 +14,11 @@ export default class BaseTable extends JetView {
 			onClick: {
 				removeBtn(e, id) {
 					this.$scope.removeItem(this, id);
+					return false;
 				},
 				editBtn(e, id) {
 					this.$scope.editItem(this, id);
+					return false;
 				}
 			}
 		};

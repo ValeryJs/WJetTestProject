@@ -92,6 +92,10 @@
     font-weight: normal;
 }
 
+.webix_toolbar .webix_el_label.app-header-label {
+    text-transform: capitalize;
+}
+
 .app-user-info {
     display: flex;
     font-size: 16px;
@@ -124,3 +128,8 @@
 .app-user-info_item + .app-user-info_item {
     margin-top: 20px;
 }
+
+.webix_view.app-contact-details {
+    border-top-color: transparent;
+}
+

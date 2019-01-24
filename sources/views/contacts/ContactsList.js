@@ -1,5 +1,5 @@
 import {JetView} from "webix-jet";
-
+import {contacts} from "../../models/contacts";
 export default class ContactsList extends JetView {
 	config() {
 		return {
@@ -10,7 +10,7 @@ export default class ContactsList extends JetView {
 				height: 50
 			},
 			template(obj) {
-				const userPhoto = obj.Photo ? obj.Photo : "sources/images/no_photo.png";
+				const userPhoto = obj.Photo || "sources/images/no_photo.png";
 
 				return `
                     <div class="app-contacts_item">
@@ -25,27 +25,38 @@ export default class ContactsList extends JetView {
                 `;
 			},
 			select: true,
-			scroll: false
+			scroll: false,
+			on: {
+				onItemClick: (id) => {
+					this.app.callEvent("contactListItemClick", [id]);
+				}
+			}
 		};
 	}
 
-	getView() {
-		return this.getRoot();
+	init(view) {
+		view.sync(contacts);
 	}
 
-	getFirstId() {
-		return this.getView().getFirstId();
+	waitDataContacts(callback) {
+		webix.promise.all([
+			contacts.waitData
+		]).then(() => {
+			callback();
+		});
 	}
 
-	selectItem(id) {
-		this.getView().select(id);
+	urlChange(view, url) {
+		const {params} = url[0];
+		this.waitDataContacts(() => {
+			view.select(params.id);
+		});
 	}
 
-	getItem(id) {
-		return this.getView().getItem(id);
-	}
-
-	sync(data) {
-		this.getView().sync(data);
+	ready(view) {
+		this.waitDataContacts(() => {
+			const firsttemId = view.getFirstId();
+			this.app.callEvent("contactList:firsttemId", [firsttemId]);
+		});
 	}
 }
