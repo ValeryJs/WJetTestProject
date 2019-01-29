@@ -14,15 +14,11 @@ export default class ActivitiesToolbar extends JetView {
 					width: 150,
 					type: "iconButton",
 					icon: "mdi mdi-plus-box",
-					click() {
-						this.callEvent("click:addActivityBtn");
+					click: () => {
+						this.app.callEvent("click:addActivityBtn");
 					}
 				}
 			]
 		};
-	}
-
-	getAddActivityBtn() {
-		return this.$$("add-activity-btn");
 	}
 }

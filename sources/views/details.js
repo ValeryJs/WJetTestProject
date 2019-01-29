@@ -1,5 +1,8 @@
 import {JetView} from "webix-jet";
-import {contacts} from "../../models/contacts";
+import ContactsTabs from "./contacts/ContactsTabs";
+import {contacts} from "../models/contacts";
+import { activities } from "../models/activities";
+
 export default class ContactsUserInfo extends JetView {
 	config() {
 		return {
@@ -20,7 +23,23 @@ export default class ContactsUserInfo extends JetView {
 							width: 100,
 							type: "iconButton",
 							icon: "mdi mdi-trash-can-outline",
-							align: "right"
+							align: "right",
+							on: {
+								onItemClick: () => {
+									webix.confirm({
+										title: "",
+										ok:"Yes", 
+										cancel:"No",
+										text:"You really want to delete this user?",
+										callback: (result) => { 
+											if(result) {
+												const id = +this.getParam("id", true);
+												this.removeContact(id);
+											}
+										}
+									});
+								}
+							}
 						},
 						{
 							view: "button",
@@ -28,7 +47,12 @@ export default class ContactsUserInfo extends JetView {
 							width: 100,
 							type: "iconButton",
 							icon: "mdi mdi-square-edit-outline",
-							align: "right"
+							align: "right",
+							on: {
+								onItemClick: () => {					
+									this.show("./edit");
+								}
+							}
 						}
 					]
 				},
@@ -78,22 +102,38 @@ export default class ContactsUserInfo extends JetView {
                             </div>
                         `;
 					}
-				}
+				},
+				ContactsTabs
 			]
 		};
 	}
 
-	// urlChange(view, url){
-	// 	const { params } = url[0];
-        
-	// 	webix.promise.all([
-	// 		contacts.waitData
-	// 	]).then(() => {
-	// 		const contactItem = contacts.getItem(params.id);
-	// 		this.setDetailsValues(contactItem);
-	// 		this.setUserName(contactItem.FullName);
-	// 	});
-	// }
+	ready() {
+		const id = this.getParam("id", true);
+		this.getContactItem(id);
+
+		this.on(this.app, "contactListItemClick", (id) => {
+			this.getContactItem(id);
+		});
+
+		this.on(this.app, "contacts:urlChange", (id) => {
+			console.log("det", id);
+		});
+	}
+
+	urlChange(){
+
+	}
+
+	getContactItem(id) {
+		webix.promise.all([
+			contacts.waitData
+		]).then(() => {
+			const contactItem = contacts.getItem(id);
+			this.setDetailsValues(contactItem);
+			this.setUserName(contactItem.FullName);
+		});
+	}
     
 	getViewLabelName() {
 		return this.$$("contactName");
@@ -102,6 +142,7 @@ export default class ContactsUserInfo extends JetView {
 	setUserName(name) {
 		this.getViewLabelName().setValue(name);
 	}
+
 	getViewDetails() {
 		return this.$$("contactDetails");
 	}
@@ -109,4 +150,33 @@ export default class ContactsUserInfo extends JetView {
 	setDetailsValues(values) {
 		this.getViewDetails().setValues(values);
 	}
+
+	removeContact(id) {
+		const contact = contacts.getItem(id);
+		const nextId = contacts.getNextId(id, 1);
+		const activitiesArr = [];
+
+		activities.data.each(item => {
+			if (item.ContactID === id) {
+				activitiesArr.push(item.id);
+			}
+		});
+
+		activities.remove(activitiesArr);
+		contacts.remove(id);
+
+		if (nextId) {
+			// this.app.callEvent("upd:userAfterDelete", nextId);
+			// this.app.show(`/top/ContactsList?id=${nextId}/details`);
+			// this.app.refresh();
+		} 
+
+		console.log("c", contact);
+		console.log("n", nextId);
+
+		// this.app.render("/top/ContactList?id=nextId/Address");
+		// this.app.show("/top/ContactsList?id=2/details");
+	}
 }
+
+

@@ -1,6 +1,6 @@
 import {JetView} from "webix-jet";
-import {contacts} from "../../models/contacts";
-import {statuses} from "../../models/statuses";
+import {contacts} from "../models/contacts";
+import {statuses} from "../models/statuses";
 
 export default class ContactsList extends JetView {
 	config() {
@@ -49,8 +49,9 @@ export default class ContactsList extends JetView {
 									borderless: true,
 									label: "Add",
 									click: () => {
-										const _id = this.getParam("id");
-										this.app.show(`/top/contacts?id=${_id}/add`);
+										const id = this.getParam("id");
+										// this.app.show(`/top/contacts?id=${id}/add`);
+										this.show(`?id=${id}/add`);
 									}
 								}
 							]
@@ -58,7 +59,7 @@ export default class ContactsList extends JetView {
 					]
 				},
 				{
-					$subview: true
+					$subview: true,
 				}
 			]
 		};
@@ -79,33 +80,33 @@ export default class ContactsList extends JetView {
 					item.Status = statuses.getItem(item.StatusID).Value;
 				});
 			});
-
 			this._afterLoadData(view, url);
 		});
 	}
-
+	
 	_afterLoadData(view, [url]) {
 		const {params} = url;
 		const list = this.getList();
-
-		if(params.id) {
-			if (list.getItem(params.id)){
-				list.select(params.id);
-			}
-			else {
-				webix.message({type: "error", text: "User nonexist!"});
-			}
-		} else {
+		if(!params.id) {
 			const id = list.getFirstId();
-			this.setParam("id", id, true);
 			list.select(id);
-			
-			this.app.show(`/top/contacts?id=${[id]}/details`);
+			// this.setParam("id", id, true);
+			this.show(`?id=${id}/details`);
+		}
+		else if(list.getItem(params.id)) {
+			list.select(params.id);
+			this.show(`?id=${params.id}/details`);
 		}
 	}
 
+	ready(){
+		this.on(contacts, "onAfterDelete", () => {
+			const id = 2;
+			// this.app.show(`?id=${id}/details`);
+			this.app.refresh();
+		});
+	}
 	urlChange(view, [url]) {
-		const id = url.params.id;
-		// this.app.callEvent("contacts:urlChange", [id]);
+		
 	}
 }

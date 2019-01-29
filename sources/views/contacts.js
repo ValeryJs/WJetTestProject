@@ -1,29 +1,21 @@
 import {JetView} from "webix-jet";
 import ContactsList from "./contacts/ContactsList";
-import ContactsUserInfo from "./contacts/ContactsUserInfo";
-
 
 export default class ContactsView extends JetView {
 	config() {
 		return {
 			cols: [
 				ContactsList,
-				ContactsUserInfo
+				{
+					$subview: true
+				}
 			]
 		};
 	}
 
-	init(view, url) {
-		const {params} = url[0];
-		
-		if (!params.id) {
-			this.on(this.app, "contactList:firsttemId", (id) => {
-				this.setParam("id", id, true);
-			});
+	ready(view, url) {
+		if (url.length === 1) {
+			this.show("./details");
 		}
-
-		this.on(this.app, "contactListItemClick", (id) => {
-			this.setParam("id", id, true);
-		});
 	}
 }

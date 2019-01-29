@@ -45,6 +45,7 @@ export default class AddEditActivityWindow extends JetView {
 					{
 						view: "richselect",
 						label: "Contacts",
+						localId: "contactSelect",
 						name: "ContactID",
 						options: {
 							data: contacts,
@@ -124,7 +125,7 @@ export default class AddEditActivityWindow extends JetView {
 		this.isNew = false;
 	}
 
-	addaAtivity() {
+	addActivity() {
 		const currentDate = new Date();
 
 		this.getForm().setValues({
@@ -141,7 +142,7 @@ export default class AddEditActivityWindow extends JetView {
 		if (activity) {
 			this.editActivity(activity);
 		} else {
-			this.addaAtivity();
+			this.addActivity();
 		}
 
 		this.getRoot().show();
@@ -159,6 +160,10 @@ export default class AddEditActivityWindow extends JetView {
 
 	getForm() {
 		return this.$$("form");
+	}
+
+	getContactSelect() {
+		return this.$$("contactSelect");
 	}
 
 	getAddSaveBtn() {
