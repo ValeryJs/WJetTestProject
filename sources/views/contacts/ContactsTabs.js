@@ -23,6 +23,6 @@ export default class ContactsTabs extends JetView {
 					]
 				},
 			]	
-		}
+		};
 	}
 }

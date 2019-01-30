@@ -115,10 +115,6 @@ export default class ContactsUserInfo extends JetView {
 		this.on(this.app, "contactListItemClick", (id) => {
 			this.getContactItem(id);
 		});
-
-		this.on(this.app, "contacts:urlChange", (id) => {
-			console.log("det", id);
-		});
 	}
 
 	urlChange(){
@@ -152,8 +148,8 @@ export default class ContactsUserInfo extends JetView {
 	}
 
 	removeContact(id) {
-		const contact = contacts.getItem(id);
-		const nextId = contacts.getNextId(id, 1);
+		// const contact = contacts.getItem(id);
+		// const nextId = contacts.getNextId(id, 1);
 		const activitiesArr = [];
 
 		activities.data.each(item => {
@@ -161,21 +157,9 @@ export default class ContactsUserInfo extends JetView {
 				activitiesArr.push(item.id);
 			}
 		});
-
+		
 		activities.remove(activitiesArr);
 		contacts.remove(id);
-
-		if (nextId) {
-			// this.app.callEvent("upd:userAfterDelete", nextId);
-			// this.app.show(`/top/ContactsList?id=${nextId}/details`);
-			// this.app.refresh();
-		} 
-
-		console.log("c", contact);
-		console.log("n", nextId);
-
-		// this.app.render("/top/ContactList?id=nextId/Address");
-		// this.app.show("/top/ContactsList?id=2/details");
 	}
 }
 

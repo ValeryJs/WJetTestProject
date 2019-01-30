@@ -29,13 +29,20 @@ export default class ContactForm extends JetView {
 								{
 									paddingX: 20,
 									rows: [
-										{ view:"text", label:"First name", name: "FirstName" },
-										{ view:"text", label:"Last Name", name: "LastName" },
-										{ view:"datepicker", label:"Joining date", name: "StartDate", value: new Date() },
+										{ view:"text", label:"First name", name: "FirstName",
+											invalidMessage: "\"First name\" must be filled in"  
+										},
+										{ view:"text", label:"Last Name", name: "LastName", 
+											invalidMessage: "\"Last name\" must be filled in"   
+										},
+										{ view:"datepicker", label:"Joining date", name: "StartDate",
+										 value: new Date(),invalidMessage: "\"Date\" must be filled in"   
+										},
 										{ 
 											view: "richselect",
 											label: "Status", 
 											name: "StatusID",
+											invalidMessage: "\"Status\" must be filled in",  
 											options: {
 												data: statuses,
 												body: {
@@ -43,16 +50,26 @@ export default class ContactForm extends JetView {
 												}
 											}
 										},
-										{ view:"text", label:"Job", name: "Job" },
-										{ view:"text", label:"Company", name: "Company" },
-										{ view:"text", label:"Website", name: "Website" },
-										{ view:"textarea", label:"Address", name: "Address" }
+										{ view:"text", label:"Job", name: "Job",
+										invalidMessage: "\"Job\" must be filled in"  
+										},
+										{ view:"text", label:"Company", name: "Company",
+										invalidMessage: "\"Company\" must be filled in"  
+										},
+										{ view:"text", label:"Website", name: "Website",
+									
+										},
+										{ view:"textarea", label:"Address", name: "Address",
+											invalidMessage: "\"Address name\" must be filled in"  
+										}
 									] 
 								},
 								{
 									paddingX: 20,
 									rows: [
-										{ view:"text", label:"Email", name: "Email" },
+										{ view:"text", label:"Email", name: "Email",
+											invalidMessage: "\"Email\" must be as name@mail.com"  
+										},
 										{ view:"text", label:"Skype	", name: "Skype" },
 										{ view:"text", label:"Phone", name: "Phone" },
 										{ view:"datepicker", label:"Birthday", name: "Birthday" },
@@ -126,6 +143,17 @@ export default class ContactForm extends JetView {
 							]
 						}
 					],
+					rules: {
+						"FirstName": webix.rules.isNotEmpty,
+						"LastName": webix.rules.isNotEmpty,
+						"StartDate": webix.rules.isNotEmpty,
+						"StatusID": webix.rules.isNotEmpty,
+						"Job": webix.rules.isNotEmpty,
+						"Address": webix.rules.isNotEmpty,
+						"Birthday": webix.rules.isNotEmpty,
+						"Company": webix.rules.isNotEmpty,
+						"Email": webix.rules.isEmail
+					},
 					elementsConfig: {
 						labelWidth: 130
 					}
@@ -143,6 +171,9 @@ export default class ContactForm extends JetView {
 							width: 100,
 							align: "right",
 							click: () => {
+								const form = this.$$("contactForm");
+								form.clearValidation();
+								form.clear();
 								this.show("details");
 							}
 						},
@@ -152,8 +183,14 @@ export default class ContactForm extends JetView {
 							width: 100,
 							align: "right",
 							click: () => {
-								this.app.callEvent("contactFormBtnClick");
-								this.show("details");
+								const form = this.$$("contactForm");
+								if(form.validate()){
+									this.app.callEvent("contactFormBtnClick");
+									webix.message("validate is successful!");
+									form.clearValidation();
+									form.clear();
+									this.show("details");
+								}
 							}
 						}
 					]

@@ -48,7 +48,6 @@ export default class ActivitiesDatatable extends BaseTable {
 			activitytypes.waitData,
 			activities.waitData
 		]).then(() => {
-			// activities.remove();
 			view.sync(activities, function() {
 				this.each((item) => {
 					const type = activitytypes.getItem(item.TypeID);

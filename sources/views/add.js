@@ -6,7 +6,7 @@ export default class ContactAdd extends ContactForm {
 		super(app, name);
 	}
 
-	ready(view) {
+	ready() {
 		this.setHeaderTitle("Add new contact");
 		this.setButtonValue("Add");
 

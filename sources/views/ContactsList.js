@@ -50,7 +50,6 @@ export default class ContactsList extends JetView {
 									label: "Add",
 									click: () => {
 										const id = this.getParam("id");
-										// this.app.show(`/top/contacts?id=${id}/add`);
 										this.show(`?id=${id}/add`);
 									}
 								}
@@ -90,7 +89,6 @@ export default class ContactsList extends JetView {
 		if(!params.id) {
 			const id = list.getFirstId();
 			list.select(id);
-			// this.setParam("id", id, true);
 			this.show(`?id=${id}/details`);
 		}
 		else if(list.getItem(params.id)) {
@@ -101,12 +99,8 @@ export default class ContactsList extends JetView {
 
 	ready(){
 		this.on(contacts, "onAfterDelete", () => {
-			const id = 2;
-			// this.app.show(`?id=${id}/details`);
 			this.app.refresh();
 		});
 	}
-	urlChange(view, [url]) {
-		
-	}
+	
 }
