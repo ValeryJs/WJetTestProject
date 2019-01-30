@@ -84,23 +84,26 @@ export default class ContactsList extends JetView {
 	}
 	
 	_afterLoadData(view, [url]) {
-		const {params} = url;
+		let {params} = url;
 		const list = this.getList();
 		if(!params.id) {
-			const id = list.getFirstId();
-			list.select(id);
-			this.show(`?id=${id}/details`);
+			params.id = list.getFirstId();
 		}
-		else if(list.getItem(params.id)) {
+		if(list.getItem(params.id)){
 			list.select(params.id);
 			this.show(`?id=${params.id}/details`);
 		}
 	}
 
-	ready(){
-		this.on(contacts, "onAfterDelete", () => {
-			this.app.refresh();
-		});
+	urlChange(view, url){	
+		
+		const list = this.getList();
+		let {params} = url[0];
+		if(list.getItem(params.id)){
+			list.select(params.id);
+		}
 	}
+	
+
 	
 }

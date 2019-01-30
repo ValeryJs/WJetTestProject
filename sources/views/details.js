@@ -106,25 +106,17 @@ export default class ContactsUserInfo extends JetView {
 				ContactsTabs
 			]
 		};
-	}
-
-	ready() {
-		const id = this.getParam("id", true);
-		this.getContactItem(id);
-
-		this.on(this.app, "contactListItemClick", (id) => {
-			this.getContactItem(id);
-		});
-	}
+	}	
 
 	urlChange(){
-
+		const id = this.getParam("id", true);
+		this.getContactItem(id);
 	}
 
 	getContactItem(id) {
 		webix.promise.all([
 			contacts.waitData
-		]).then(() => {
+		]).then(() => {	
 			const contactItem = contacts.getItem(id);
 			this.setDetailsValues(contactItem);
 			this.setUserName(contactItem.FullName);
@@ -148,8 +140,7 @@ export default class ContactsUserInfo extends JetView {
 	}
 
 	removeContact(id) {
-		// const contact = contacts.getItem(id);
-		// const nextId = contacts.getNextId(id, 1);
+		const nextId = contacts.getNextId(id, 1);
 		const activitiesArr = [];
 
 		activities.data.each(item => {
@@ -160,6 +151,7 @@ export default class ContactsUserInfo extends JetView {
 		
 		activities.remove(activitiesArr);
 		contacts.remove(id);
+		this.app.show(`/top/ContactsList?id=${nextId}/details`);
 	}
 }
 
