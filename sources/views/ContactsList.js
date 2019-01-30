@@ -49,8 +49,7 @@ export default class ContactsList extends JetView {
 									borderless: true,
 									label: "Add",
 									click: () => {
-										const id = this.getParam("id");
-										this.show(`?id=${id}/add`);
+										this.show("add");
 									}
 								}
 							]
@@ -103,7 +102,5 @@ export default class ContactsList extends JetView {
 			list.select(params.id);
 		}
 	}
-	
-
 	
 }

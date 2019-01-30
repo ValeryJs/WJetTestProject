@@ -11,16 +11,10 @@ export default class ContactAdd extends ContactForm {
 		this.setButtonValue("Add");
 
 		this.on(this.app, "contactFormBtnClick", () => {
-			contacts.add(this.getForm().getValues());
+			let lastId = contacts.getLastId();
+			contacts.add(this.getForm().getValues(), 0);
+			this.app.show(`/top/ContactsList?id=${lastId}/details`);
 		});	
-
-		contacts.attachEvent("onAfterAdd", () => {
-			webix.message("New record was added!");
-
-			const firstId = contacts.getFirstId();
-			
-			this.app.show(`/top/ContactsList?id=${firstId}/details`);
-		});
 	}
 
 	afterLoadData(callback) {

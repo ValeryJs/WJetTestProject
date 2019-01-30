@@ -122,6 +122,24 @@ export default class ContactsUserInfo extends JetView {
 			this.setUserName(contactItem.FullName);
 		});
 	}
+
+	removeContact(id) {
+		let newId = contacts.getPrevId(id, 1);
+		if(!newId) {
+			newId = contacts.getNextId(id, 1);
+		}
+		const activitiesArr = [];
+
+		activities.data.each(item => {
+			if (item.ContactID === id) {
+				activitiesArr.push(item.id);
+			}
+		});
+		
+		activities.remove(activitiesArr);
+		contacts.remove(id);
+		this.app.show(`/top/ContactsList?id=${newId}/details`);
+	}
     
 	getViewLabelName() {
 		return this.$$("contactName");
@@ -137,21 +155,6 @@ export default class ContactsUserInfo extends JetView {
 
 	setDetailsValues(values) {
 		this.getViewDetails().setValues(values);
-	}
-
-	removeContact(id) {
-		const nextId = contacts.getNextId(id, 1);
-		const activitiesArr = [];
-
-		activities.data.each(item => {
-			if (item.ContactID === id) {
-				activitiesArr.push(item.id);
-			}
-		});
-		
-		activities.remove(activitiesArr);
-		contacts.remove(id);
-		this.app.show(`/top/ContactsList?id=${nextId}/details`);
 	}
 }
 

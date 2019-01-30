@@ -189,7 +189,7 @@ export default class ContactForm extends JetView {
 									webix.message("validate is successful!");
 									form.clearValidation();
 									form.clear();
-									this.show("details");
+									// this.show("details");
 								}
 							}
 						}
