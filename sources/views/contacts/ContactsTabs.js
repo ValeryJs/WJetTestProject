@@ -12,17 +12,31 @@ export default class ContactsTabs extends JetView {
 					value: "",
 					multiview: "true", 
 					options: [
-						{ value: "Activities", id: "contactActivitiesTable" },
-						{ value: "Files", id: "contactFilesTable" }
+						{ value: "Activities", id: "activities" },
+						{ value: "Files", id: "files" }
 					]
 				},
 				{	
 					cells: [
-						ContactActivitiesTab,
-						ContactFilesTab
+						{
+							id: "activities",
+							$subview: ContactActivitiesTab,
+						},
+						{
+							id: "files",
+							$subview: ContactFilesTab
+						}
+						
 					]
 				},
 			]	
 		};
+	}
+
+	getId(){
+		return this.$$(ContactActivitiesTab);
+	}
+	getId2(){
+		return this.$$(ContactFilesTab);
 	}
 }

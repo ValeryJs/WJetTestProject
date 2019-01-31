@@ -1,9 +1,13 @@
 import {JetView} from "webix-jet";
 import ContactFilesTable from "./ContactFilesTable";
+import {files} from "../../models/files";
+
 export default class ContactFilesTab extends JetView {
 	config() {
+		const _this = this;
+
 		return {
-			id: "contactFilesTable",
+			localId: "contactFilesTable",
 			rows: [
 				ContactFilesTable,
 				{
@@ -15,13 +19,21 @@ export default class ContactFilesTab extends JetView {
 							view: "uploader",
 							label: "Upload file",
 							width: 150,
-							name: "Photo",
-							link: "tableFiles",  
+							name: "Photo", 
 							autosend: false,
 							accept: "image/png, image/gif, image/jpeg",
 							on: {
 								onBeforeFileAdd(item) {
-									item.date = item.file.lastModifiedDate;
+									const {name, sizetext, file} = item;
+									const date = file.lastModifiedDate;
+									const ContactID = +_this.getParam("id", true);
+
+									files.add({
+										ContactID,
+										name, 
+										sizetext,
+										date
+									});
 								}
 							}
 						},

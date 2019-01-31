@@ -1,4 +1,5 @@
 import BaseTable from "../../components/BaseTable";
+import {files} from "../../models/files";
 
 export default class ContactFilesTable extends BaseTable {
 	constructor(app, name) {
@@ -22,7 +23,20 @@ export default class ContactFilesTable extends BaseTable {
 				},
 				BaseTable.getRemoveColumn()
 			],
-			id: "tableFiles"
+			collection: files
+		});
+	}
+
+	urlChange(view) {
+		const contactId = +this.getParam("id", true);
+
+		files.waitData.then(() => {
+			view.sync(files);
+			files.filter(file => {
+				if (file) {
+					return file.ContactID === contactId;
+				}
+			});
 		});
 	}
 

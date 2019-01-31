@@ -57,10 +57,13 @@ export default class ActivitiesDatatable extends BaseTable {
 					item.contactUser = `${contact.FirstName} ${contact.LastName}`;
 				});
 			});
+
+			activities.filter(item => item);
 		});
 	}
 
 	ready() {
+
 		this._ready();
 	}
 }

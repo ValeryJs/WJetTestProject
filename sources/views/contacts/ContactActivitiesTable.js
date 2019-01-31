@@ -14,7 +14,7 @@ export default class ContactActivitiesTable extends BaseTable {
 					width: 150
 				},
 				{
-					id: "DueDate",
+					id: "DueDate",	
 					header: [{content: "datepickerFilter"}],
 					format: webix.i18n.longDateFormatStr,
 					width: 170
@@ -32,19 +32,18 @@ export default class ContactActivitiesTable extends BaseTable {
 	}
 
 	getContactItem(view, id) {
-		
 		webix.promise.all([
 			activitytypes.waitData,
 			activities.waitData
 		]).then(() => {
 			view.sync(activities, function() {
-				this.filter(item => {
+				this.each(item => {
 					const type = activitytypes.getItem(item.TypeID);
 					item.typeValue = type.Value;
-	
-					return item.ContactID === id;
 				});
 			});
+
+			activities.filter(item => item.ContactID === id);
 		});
 	}
 

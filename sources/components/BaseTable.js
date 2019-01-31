@@ -5,13 +5,11 @@ export default class BaseTable extends JetView {
 		super(app, name);
 		this._columns = configs.columns;
 		this._collection = configs.collection;
-		this._id = configs.id;
 	}
 
 	config() {
 		return {
 			view: "datatable",
-			id: this._id,
 			columns: this._columns,
 			onClick: {
 				removeBtn(e, id) {

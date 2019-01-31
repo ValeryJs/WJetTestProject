@@ -102,5 +102,10 @@ export default class ContactsList extends JetView {
 			list.select(params.id);
 		}
 	}
-	
+
+	ready() {
+		this.on(contacts.data, "onIdChange", (oldid, newid) => {
+			this.app.show(`/top/ContactsList?id=${newid}/details`);
+		});
+	}
 }

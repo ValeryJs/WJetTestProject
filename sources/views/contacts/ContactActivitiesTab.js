@@ -8,7 +8,7 @@ export default class ContactActivitiesTab extends JetView {
 		const _this = this;
 
 		return {
-			id: "contactActivitiesTable",
+			localId: "contactActivitiesTable",
 			rows: [
 				ContactActivitiesTable,
 				{

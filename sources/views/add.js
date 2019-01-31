@@ -11,14 +11,8 @@ export default class ContactAdd extends ContactForm {
 		this.setButtonValue("Add");
 
 		this.on(this.app, "contactFormBtnClick", () => {
-			let lastId = contacts.getLastId();
-			contacts.add(this.getForm().getValues(), 0);
-			this.app.show(`/top/ContactsList?id=${lastId}/details`);
+			contacts.add(this.getForm().getValues());
 		});	
-	}
-
-	afterLoadData(callback) {
-		contacts.waitData.then(callback);
 	}
 
 }
