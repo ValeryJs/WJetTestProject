@@ -1,5 +1,7 @@
 import BaseTable from "../../components/BaseTable";
 
+import {contacts} from "../../models/contacts";
+import {activitytypes} from "../../models/activitytypes";
 import {activities} from "../../models/activities";
 
 
@@ -41,6 +43,27 @@ export default class ActivitiesDatatable extends BaseTable {
 	}
 
 	init(view) {
-		view.sync(activities);
+		webix.promise.all([
+			contacts.waitData,
+			activitytypes.waitData,
+			activities.waitData
+		]).then(() => {
+			view.sync(activities, function() {
+				this.each((item) => {
+					const type = activitytypes.getItem(item.TypeID);
+					const contact = contacts.getItem(item.ContactID);
+
+					item.typeValue = type.Value;
+					item.contactUser = `${contact.FirstName} ${contact.LastName}`;
+				});
+			});
+
+			activities.filter(item => item);
+		});
+	}
+
+	ready() {
+
+		this._ready();
 	}
 }

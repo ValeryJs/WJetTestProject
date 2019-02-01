@@ -68,7 +68,7 @@ export default class BaseTable extends JetView {
 	}
 
 	editItem(view, id) {
-		view.callEvent("edit:tableItem", [view.getItem(id)]);
+		this.app.callEvent("edit:tableItem", [view.getItem(id)]);
 	}
 
 	updateItem(id, value) {
@@ -77,5 +77,15 @@ export default class BaseTable extends JetView {
 
 	addItem(value) {
 		this._collection.add(value);
+	}
+
+	_ready() {
+		this.on(this.app, "table:addItem", (value) => {
+			this.addItem(value);
+		});
+
+		this.on(this.app, "table:updateItem", (id, value) => {
+			this.updateItem(id, value);
+		});
 	}
 }

@@ -29,12 +29,14 @@ export default class AddEditActivityWindow extends JetView {
 						view: "textarea",
 						label: "Details",
 						name: "Details",
-						height: 100
+						height: 100,		
+						invalidMessage: "\"Details\" must be filled in" 
 					},
 					{
 						view: "richselect",
 						label: "Type",
 						name: "TypeID",
+						invalidMessage: "\"Type\" must be filled in", 
 						options: {
 							data: activitytypes,
 							body: {
@@ -45,7 +47,9 @@ export default class AddEditActivityWindow extends JetView {
 					{
 						view: "richselect",
 						label: "Contacts",
+						localId: "contactSelect",
 						name: "ContactID",
+						invalidMessage: "\"Contacts\" must be filled in", 
 						options: {
 							data: contacts,
 							body: {
@@ -69,7 +73,8 @@ export default class AddEditActivityWindow extends JetView {
 								type: "time",
 								label: "Time",
 								format: webix.Date.dateToStr("%H:%i"),
-								name: "DueTime"
+								name: "DueTime",
+								invalidMessage: "\"Date\" must be filled in" 
 							}
 						]
 					},
@@ -124,7 +129,7 @@ export default class AddEditActivityWindow extends JetView {
 		this.isNew = false;
 	}
 
-	addaAtivity() {
+	addActivity() {
 		const currentDate = new Date();
 
 		this.getForm().setValues({
@@ -141,7 +146,7 @@ export default class AddEditActivityWindow extends JetView {
 		if (activity) {
 			this.editActivity(activity);
 		} else {
-			this.addaAtivity();
+			this.addActivity();
 		}
 
 		this.getRoot().show();
@@ -159,6 +164,10 @@ export default class AddEditActivityWindow extends JetView {
 
 	getForm() {
 		return this.$$("form");
+	}
+
+	getContactSelect() {
+		return this.$$("contactSelect");
 	}
 
 	getAddSaveBtn() {
