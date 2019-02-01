@@ -10,7 +10,7 @@ export default class ContactsTabs extends JetView {
 					view: "tabbar",
 					id: "tabbar",
 					value: "",
-					multiview: "true", 
+					multiview: true, 
 					options: [
 						{ value: "Activities", id: "activities" },
 						{ value: "Files", id: "files" }

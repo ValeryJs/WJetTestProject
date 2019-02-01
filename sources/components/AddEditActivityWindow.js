@@ -29,7 +29,7 @@ export default class AddEditActivityWindow extends JetView {
 						view: "textarea",
 						label: "Details",
 						name: "Details",
-						height: 100,
+						height: 100,		
 						invalidMessage: "\"Details\" must be filled in" 
 					},
 					{
