@@ -2,23 +2,23 @@ import BaseTable from "../../components/BaseTable";
 import {files} from "../../models/files";
 
 export default class ContactFilesTable extends BaseTable {
-	constructor(app, name) {
+	constructor(app, name, locale) {
 		super(app, name, {
 			columns: [
 				{
 					id: "name",
-					header: "Name",
+					header: locale("Name"),
 					fillspace: true
 				},
 				{
 					id: "date",
-					header: "Change Date",
+					header: locale("ChangeDate"),
 					format: webix.i18n.longDateFormatStr,
 					width: 200
 				},
 				{
 					id: "sizetext",
-					header: "Size",
+					header: locale("Size"),
 					width: 200
 				},
 				BaseTable.getRemoveColumn()

@@ -5,6 +5,7 @@ import {activitytypes} from "../models/activitytypes";
 
 export default class AddEditActivityWindow extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			view: "window",
 			modal: true,
@@ -27,14 +28,14 @@ export default class AddEditActivityWindow extends JetView {
 				elements: [
 					{
 						view: "textarea",
-						label: "Details",
+						label: _("Details"),
 						name: "Details",
 						height: 100,		
 						invalidMessage: "\"Details\" must be filled in" 
 					},
 					{
 						view: "richselect",
-						label: "Type",
+						label: _("Type"),
 						name: "TypeID",
 						invalidMessage: "\"Type\" must be filled in", 
 						options: {
@@ -46,7 +47,7 @@ export default class AddEditActivityWindow extends JetView {
 					},
 					{
 						view: "richselect",
-						label: "Contacts",
+						label: _("Contacts"),
 						localId: "contactSelect",
 						name: "ContactID",
 						invalidMessage: "\"Contacts\" must be filled in", 
@@ -61,7 +62,7 @@ export default class AddEditActivityWindow extends JetView {
 						cols: [
 							{
 								view: "datepicker",
-								label: "Date",
+								label: _("Date"),
 								format: webix.i18n.longDateFormatStr,
 								name: "DueDate"
 							},
@@ -71,7 +72,7 @@ export default class AddEditActivityWindow extends JetView {
 							{
 								view: "datepicker",
 								type: "time",
-								label: "Time",
+								label: _("Time"),
 								format: webix.Date.dateToStr("%H:%i"),
 								name: "DueTime",
 								invalidMessage: "\"Date\" must be filled in" 
@@ -80,9 +81,8 @@ export default class AddEditActivityWindow extends JetView {
 					},
 					{
 						view: "checkbox",
-						labelRight: "Complited",
-						name: "complited",
-						value: 1
+						labelRight: _("Complited"),
+						name: "State"
 					},
 					{
 						cols: [
@@ -96,7 +96,7 @@ export default class AddEditActivityWindow extends JetView {
 							},
 							{
 								view: "button",
-								value: "Cancel",
+								value: _("Cancel"),
 								width: 100,
 								click: () => this.close()
 							}
@@ -123,22 +123,23 @@ export default class AddEditActivityWindow extends JetView {
 	}
 
 	editActivity(activity) {
+		const _ = this.app.getService("locale")._;
 		this.getForm().setValues(activity);
-		this.setHeaderTitle("Edit activity");
-		this.setAddSaveBtnValue("Save");
+		this.setHeaderTitle(_("EditActivity"));
+		this.setAddSaveBtnValue(_("Save"));
 		this.isNew = false;
 	}
 
 	addActivity() {
 		const currentDate = new Date();
-
+		const _ = this.app.getService("locale")._;
 		this.getForm().setValues({
 			DueDate: currentDate,
 			DueTime: currentDate
 		});
 
-		this.setHeaderTitle("Add activity");
-		this.setAddSaveBtnValue("Add");
+		this.setHeaderTitle(_("AddActivity"));
+		this.setAddSaveBtnValue(_("Add"));
 		this.isNew = true;
 	}
 

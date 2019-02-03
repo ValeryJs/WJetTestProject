@@ -5,6 +5,7 @@ import { activities } from "../models/activities";
 
 export default class ContactsUserInfo extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
 				{
@@ -19,8 +20,8 @@ export default class ContactsUserInfo extends JetView {
 						},
 						{
 							view: "button",
-							label: "Delete",
-							width: 100,
+							label: _("Delete"),
+							autoWidth: true,
 							type: "iconButton",
 							icon: "mdi mdi-trash-can-outline",
 							align: "right",
@@ -43,8 +44,8 @@ export default class ContactsUserInfo extends JetView {
 						},
 						{
 							view: "button",
-							label: "Edit",
-							width: 100,
+							label: _("Edit"),
+							autoWidth: true,
 							type: "iconButton",
 							icon: "mdi mdi-square-edit-outline",
 							align: "right",

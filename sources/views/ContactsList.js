@@ -4,10 +4,16 @@ import {statuses} from "../models/statuses";
 
 export default class ContactsList extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			cols: [
 				{
 					rows: [
+						{
+							view:"text",
+							localId:"grouplist_input",
+							placeholder: _("PlaceHolder")
+						},
 						{
 							view: "list",
 							width: 300,
@@ -47,7 +53,7 @@ export default class ContactsList extends JetView {
 								{
 									view: "button",
 									borderless: true,
-									label: "Add",
+									label: _("Add"),
 									click: () => {
 										this.show("add");
 									}
@@ -103,9 +109,33 @@ export default class ContactsList extends JetView {
 		}
 	}
 
-	ready() {
+	ready(view) {
+		this.filterByAll(view);
 		this.on(contacts.data, "onIdChange", (oldid, newid) => {
 			this.app.show(`/top/ContactsList?id=${newid}/details`);
+		});
+	}
+
+	filterByAll(view){
+		const inputFilterObj = this.$$("grouplist_input");
+		this.on(inputFilterObj, "onTimedKeyPress", () => {
+			const inputValue = inputFilterObj.getValue().toLowerCase();
+			const filterObj = view.queryView("list");
+			
+			filterObj.filter((obj) => {
+				if(inputValue){
+					for(const value in obj) {
+						if( obj[value] && obj[value] !== " " && typeof(obj[value]) === "string") {
+							if(obj[value].toLowerCase().indexOf(inputValue) == 0){
+								return true;
+							}
+						}	
+					}
+				}	
+				else{
+					return true;
+				}
+			});
 		});
 	}
 }

@@ -149,3 +149,7 @@
     vertical-align: top;
 }
 
+.ativity-filter-buttons button {
+    padding-left: 10px;
+    padding-right: 10px;
+}

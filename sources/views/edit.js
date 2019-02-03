@@ -8,10 +8,11 @@ export default class ContactEdit extends ContactForm {
 	}
 
 	ready() {
+		const _ = this.app.getService("locale")._;
 		const id = this.getParam("id", true);
 		this.getContactItem(id);
-		this.setHeaderTitle("Edit contact");
-		this.setButtonValue("Edit");
+		this.setHeaderTitle(_("EditContact"));
+		this.setButtonValue(_("Edit"));
 
 		this.on(this.app, "contactListItemClick", (id) => {
 			this.getContactItem(id);

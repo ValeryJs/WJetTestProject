@@ -4,6 +4,7 @@ import ContactFilesTab from "./ContactFilesTab";
 
 export default class ContactsTabs extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
 				{	
@@ -12,8 +13,8 @@ export default class ContactsTabs extends JetView {
 					value: "",
 					multiview: true, 
 					options: [
-						{ value: "Activities", id: "activities" },
-						{ value: "Files", id: "files" }
+						{ value: _("Activities"), id: "activities" },
+						{ value: _("Files"), id: "files" }
 					]
 				},
 				{	
@@ -31,12 +32,5 @@ export default class ContactsTabs extends JetView {
 				},
 			]	
 		};
-	}
-
-	getId(){
-		return this.$$(ContactActivitiesTab);
-	}
-	getId2(){
-		return this.$$(ContactFilesTab);
 	}
 }

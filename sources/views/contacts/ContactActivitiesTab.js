@@ -5,6 +5,7 @@ import AddEditActivityWindow from "../../components/AddEditActivityWindow";
 
 export default class ContactActivitiesTab extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const _this = this;
 
 		return {
@@ -19,8 +20,8 @@ export default class ContactActivitiesTab extends JetView {
 						{
 							view: "button",
 							borderless: true,
-							label: "Add activity",
-							width: 150,
+							label: _("AddActivity"),
+							width: 200,
 							click() {
 								_this.app.callEvent("click:addActivityBtn");
 							}
