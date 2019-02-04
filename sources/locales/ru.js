@@ -56,7 +56,7 @@ export default {
 	add: "Добавить",
 	All: "Все",
 	DeleteFoto: "Удалить фото",
-	ContactsList: "Список контактов",
+	ContactsList: "Контакты",
 	settings: "Настройки",
 	size: "Размер",
 	Size: "Размер",
@@ -74,7 +74,7 @@ export default {
 	ConfirmDeleteActivity: "Вы действительно хотите удалить данно мероприятие?",
 	deleteItem: "Вы действительно хотите удалить данный элемент?",
 	No: "Нет",
-	selectFilter: " Выбор фильтра "
+	selectFilter: "Выбор фильтра"
 
 
 };

@@ -32,24 +32,7 @@ export default class ContactFilesTable extends BaseTable {
 
 		files.waitData.then(() => {
 			view.sync(files);
-			files.filter(file => {
-				if (file) {
-					return file.ContactID === contactId;
-				}
-			});
-		});
-	}
-
-	removeItem(view, id) {
-		webix.confirm({
-			ok: "Yes",
-			cancel: "No",
-			text: "Do you really want to delete this item?",
-			callback: (result) => {
-				if (result) {
-					view.remove(id.row);
-				}
-			}
+			files.filter(file => file.ContactID === contactId);
 		});
 	}
 }
