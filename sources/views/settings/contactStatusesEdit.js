@@ -59,7 +59,7 @@ export default class ContactStatusesEditView extends JetView {
 							if(countStatus){
 								webix.alert({
 									type: "alert-error",
-									text: `Unable to delete, this status is in use in ${countStatus} contacts`
+									text: `Unable to delete! This status is in use in ${countStatus} contacts`
 								});
 							}else{
 								webix.confirm("Do you really want to delete this status?", (result) => {

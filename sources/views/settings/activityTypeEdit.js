@@ -55,7 +55,7 @@ export default class ActivityTypeEditView extends JetView {
 							if(countActivity){
 								webix.alert({
 									type:"alert-error",
-									text:`Unable to delete, this type is in use in ${countActivity} activities`
+									text:`Unable to delete! This type is in use in ${countActivity} activities`
 								});
 							}else{
 								webix.confirm("Do you really want to delete this type activity?", (result) => {
