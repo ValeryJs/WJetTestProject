@@ -12,7 +12,7 @@ export default class ActivitiesToolbar extends JetView {
 					css: "ativity-filter-buttons",
 					optionWidth: "auto",
 					inputPadding: 10,
-					value: _("All"),
+					value: "all",
 					options: [
 						{	id: "all",	value: _("All") },
 						{ id: "overdue", value: _("Overdue") }, 
@@ -21,7 +21,7 @@ export default class ActivitiesToolbar extends JetView {
 						{ id: "tomorrow", value: _("Tomorrow") }, 
 						{ id: "thisweek", value: _("ThisWeek") }, 
 						{ id: "thismonth", value: _("ThisMonth") }
-					]
+					],
 				},
 				{
 					view: "button",

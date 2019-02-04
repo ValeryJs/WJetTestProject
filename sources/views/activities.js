@@ -42,9 +42,27 @@ export default class ActivitiesView extends JetView {
 		const toolbar = this.getSubView("toolbar").getRoot().queryView("segmented");
 		const datatable = this.getSubView("datatable").getView();
 		const filter = new ActivityFilters(datatable);
-		this.on(toolbar, "onAfterTabClick", (id) => {
-			filter[id]();
+		this.on(toolbar, "onAfterTabClick", () => {
+			datatable.filterByAll();
+			datatable.registerFilter(
+				toolbar,  
+				{ 
+					compare:function(cellValue, filterValue, obj){
+						return filter[filterValue](obj);
+					}
+				},
+				{ 
+					getValue:function(view){
+						return view.getValue();
+					},
+					setValue:function(view, value){
+						view.setValue(value);
+					}
+				}
+			);
+
 		});
+
 
 	}
 }

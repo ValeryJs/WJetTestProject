@@ -32,7 +32,12 @@ export default class ContactStatusesEditView extends JetView {
 					view: "datatable",
 					scroll: "y",
 					columns:[
-						{ id:"Value",  header:"Status", fillspace: true},
+						{ 
+							id:"Value",
+							header:"Status",
+							template: "<span class='webix_icon wxi-#Icon#'></span> #Value#", 
+							fillspace: true
+						},
 						{
 							id: "edit",
 							header: "",

@@ -82,7 +82,9 @@ export default class AddEditActivityWindow extends JetView {
 					{
 						view: "checkbox",
 						labelRight: _("Complited"),
-						name: "State"
+						name: "State",
+						uncheckValue: "Open", 
+						checkValue: "Close"
 					},
 					{
 						cols: [

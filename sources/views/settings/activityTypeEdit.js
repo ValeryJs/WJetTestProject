@@ -30,7 +30,12 @@ export default class ActivityTypeEditView extends JetView {
 					view: "datatable",
 					scroll: "y",
 					columns:[
-						{ id:"Value",   header:"Value", fillspace: true},
+						{ 
+							id:"Value",
+							header:"Value", 
+							template: "<span class='webix_icon wxi-#Icon#'></span> #Value#",
+							fillspace: true
+						},
 						{
 							id: "edit",
 							header: "",

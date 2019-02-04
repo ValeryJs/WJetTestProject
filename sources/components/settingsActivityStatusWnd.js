@@ -1,4 +1,5 @@
 import { JetView } from "webix-jet";
+import { icons } from "../models/icons";
 
 export default class SettingsActivityStatusWnd extends JetView {
 	config() {
@@ -29,11 +30,17 @@ export default class SettingsActivityStatusWnd extends JetView {
 						name: "Value",
 						invalidMessage: "\"Type\" must be filled in"
 					},
-					{
-						view: "text",
+					{ 
+						view: "richselect",
 						label: _("Icon"),
 						name: "Icon",
-						invalidMessage: "\"Type\" must be filled in"
+						invalidMessage: "\"Type\" must be filled in",
+						options: {
+							body: {
+								data: icons,
+								template: "<span class='webix_icon wxi wxi-#icon#'></span> #value#"
+							}
+						}
 					},
 					{
 						cols: [
@@ -83,6 +90,13 @@ export default class SettingsActivityStatusWnd extends JetView {
 		this.setBtnValue("Save");
 		const label = this.getLabel();
 		label.setValue("Edit");
+
+		icons.data.each(obj => {
+			if (obj.icon === item.Icon) {
+				item.Icon = obj.id;
+			}
+		});
+
 		this.$$("form").setValues(item);
 		this._eventName = listener;
 		this.showWindow();
@@ -97,6 +111,8 @@ export default class SettingsActivityStatusWnd extends JetView {
 	}
 
 	onSubmit(eventName, formValue) {
+		const iconItem = icons.getItem(formValue.Icon);
+		formValue.Icon = iconItem.icon;
 		eventName += this._eventName;
 		this.app.callEvent(eventName, [formValue]);
 		this.close();	
