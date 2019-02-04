@@ -21,10 +21,9 @@ export default class ContactsUserInfo extends JetView {
 						{
 							view: "button",
 							label: _("Delete"),
-							autoWidth: true,
+							autowidth: true,
 							type: "iconButton",
 							icon: "mdi mdi-trash-can-outline",
-							align: "right",
 							on: {
 								onItemClick: () => {
 									webix.confirm({
@@ -45,10 +44,9 @@ export default class ContactsUserInfo extends JetView {
 						{
 							view: "button",
 							label: _("Edit"),
-							autoWidth: true,
+							autowidth: true,
 							type: "iconButton",
 							icon: "mdi mdi-square-edit-outline",
-							align: "right",
 							on: {
 								onItemClick: () => {					
 									this.show("./edit");

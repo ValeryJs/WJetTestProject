@@ -1,7 +1,7 @@
 import { JetView } from "webix-jet";
 import { activitytypes } from "../../models/activitytypes";
 import  SettingsActivityStatusWnd  from  "../../components/settingsActivityStatusWnd";
-// import { activities } from "../../models/activities";
+import { activities } from "../../models/activities";
 export default class ActivityTypeEditView extends JetView {
 	config(){
 		const _ = this.app.getService("locale")._;
@@ -46,11 +46,24 @@ export default class ActivityTypeEditView extends JetView {
 					],
 					onClick: {
 						removeBtn(e, {row}) {
-							webix.confirm("Do you really want to delete this type activity?", (result) => {
-								if(result) {
-									activitytypes.remove(row);
+							let countActivity = 0;
+							activities.data.each(item => {
+								if(item.TypeID === row){
+									countActivity++;
 								}
 							});
+							if(countActivity){
+								webix.alert({
+									type:"alert-error",
+									text:`Unable to delete, this type is in use in ${countActivity} activities`
+								});
+							}else{
+								webix.confirm("Do you really want to delete this type activity?", (result) => {
+									if(result) {
+										activitytypes.remove(row);
+									}
+								});
+							}
 						},
 						editBtn(e, id) {
 							const actType = activitytypes.getItem(id);

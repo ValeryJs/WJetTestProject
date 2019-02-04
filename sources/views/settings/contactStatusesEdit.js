@@ -1,6 +1,7 @@
 import { JetView } from "webix-jet";
 import { statuses } from "../../models/statuses";
 import  SettingsActivityStatusWnd  from  "../../components/settingsActivityStatusWnd";
+import { contacts } from "../../models/contacts";
 // import { settingsActivityTypeWnd } from "../../components/settingsActivityTypeWnd";
 
 export default class ContactStatusesEditView extends JetView {
@@ -48,11 +49,26 @@ export default class ContactStatusesEditView extends JetView {
 					],
 					onClick: {
 						removeBtn(e, {row}) {
-							webix.confirm("Do you really want to delete this type activity?", (result) => {
-								if(result) {
-									statuses.remove(row);
+							let countStatus = 0;
+							contacts.data.each(item => {
+								if(item.StatusID === row) {
+									countStatus++;
 								}
 							});
+
+							if(countStatus){
+								webix.alert({
+									type: "alert-error",
+									text: `Unable to delete, this status is in use in ${countStatus} contacts`
+								});
+							}else{
+								webix.confirm("Do you really want to delete this status?", (result) => {
+									if(result) {
+										statuses.remove(row);
+									}
+								});
+							}
+							
 						},
 						editBtn(e, id) {
 							const status = statuses.getItem(id);
