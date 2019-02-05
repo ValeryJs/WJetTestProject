@@ -26,9 +26,12 @@ export default class BaseTable extends JetView {
 
 	static getCheckboxColumn() {
 		return {
-			header: "",
+			header: "",	
+			id: "State",	
 			template: "{common.checkbox()}",
-			width: 40
+			width: 40,
+			uncheckValue: "Open", 
+			checkValue: "Close"
 		};
 	}
 
@@ -49,12 +52,13 @@ export default class BaseTable extends JetView {
 			width: 40
 		};
 	}
-
+	
 	removeItem(view, id) {
+		const _ = this.app.getService("locale")._;
 		webix.confirm({
-			ok: "Yes",
-			cancel: "No",
-			text: "Do you really want to delete this item?",
+			ok: _("Yes"),
+			cancel: _("No"),
+			text: _("deleteItem"),
 			callback: (result) => {
 				if (result) {
 					this._collection.remove(id);

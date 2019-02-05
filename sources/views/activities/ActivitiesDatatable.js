@@ -1,37 +1,37 @@
 import BaseTable from "../../components/BaseTable";
-
 import {contacts} from "../../models/contacts";
 import {activitytypes} from "../../models/activitytypes";
 import {activities} from "../../models/activities";
 
 
 export default class ActivitiesDatatable extends BaseTable {
-	constructor(app, name) {
+	
+	constructor(app, name, locale) {
 		super(app, name, {
 			columns: [
 				BaseTable.getCheckboxColumn(),
 				{
 					id: "typeValue",
-					header: ["Activity type", {content: "selectFilter"}],
+					header: [locale("ActivityType"), {content: "selectFilter"}],
 					width: 200,
 					sort: "string"
 				},
 				{
 					id: "DueDate",
-					header: ["Due date", {content: "datepickerFilter"}],
+					header: [locale("DueDate"), {content: "datepickerFilter"}],
 					sort: "date",
 					format: webix.i18n.longDateFormatStr,
 					width: 170
 				},
 				{
 					id: "Details",
-					header: ["Details", {content: "textFilter"}],
+					header: [locale("Details"), {content: "textFilter"}],
 					fillspace: true,
 					sort: "string"
 				},
 				{
 					id: "contactUser",
-					header: ["Contact", {content: "selectFilter"}],
+					header: [locale("Contact"), {content: "selectFilter"}],
 					width: 200,
 					sort: "string"
 				},
@@ -63,7 +63,6 @@ export default class ActivitiesDatatable extends BaseTable {
 	}
 
 	ready() {
-
 		this._ready();
 	}
 }

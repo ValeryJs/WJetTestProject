@@ -5,6 +5,7 @@ import { activities } from "../models/activities";
 
 export default class ContactsUserInfo extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		return {
 			rows: [
 				{
@@ -19,11 +20,10 @@ export default class ContactsUserInfo extends JetView {
 						},
 						{
 							view: "button",
-							label: "Delete",
-							width: 100,
+							label: _("Delete"),
+							autowidth: true,
 							type: "iconButton",
 							icon: "mdi mdi-trash-can-outline",
-							align: "right",
 							on: {
 								onItemClick: () => {
 									webix.confirm({
@@ -43,11 +43,10 @@ export default class ContactsUserInfo extends JetView {
 						},
 						{
 							view: "button",
-							label: "Edit",
-							width: 100,
+							label: _("Edit"),
+							autowidth: true,
 							type: "iconButton",
 							icon: "mdi mdi-square-edit-outline",
-							align: "right",
 							on: {
 								onItemClick: () => {					
 									this.show("./edit");

@@ -2,6 +2,7 @@ import {JetView, plugins} from "webix-jet";
 
 export default class TopView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const header = {
 			view: "toolbar",
 			css: "webix_dark",
@@ -25,9 +26,9 @@ export default class TopView extends JetView {
 			select: true,
 			template: "<span class='webix_icon #icon#'></span> #value# ",
 			data: [
-				{value: "Contacts", id: "ContactsList", icon: "mdi mdi-account-group"},
-				{value: "Activities", id: "activities", icon: "mdi mdi-calendar-multiselect"},
-				{value: "Settings", id: "settings", icon: "mdi mdi-settings-outline"}
+				{value: _("Contacts"), id: "ContactsList", icon: "mdi mdi-account-group"},
+				{value: _("Activities"), id: "activities", icon: "mdi mdi-calendar-multiselect"},
+				{value: _("Settings"), id: "settings", icon: "mdi mdi-settings-outline"}
 			]
 		};
 
@@ -51,7 +52,8 @@ export default class TopView extends JetView {
 
 	urlChange(view, url) {
 		if (url.length > 1) {
-			this.$$("headerTitle").setValue(url[1].page);
+			const _ = this.app.getService("locale")._;
+			this.$$("headerTitle").setValue(_(url[1].page));
 		}
 	}
 }

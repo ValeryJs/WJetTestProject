@@ -3,6 +3,7 @@ import {statuses} from "../../models/statuses";
 
 export default class ContactForm extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const _this = this;
 
 		return {
@@ -29,18 +30,18 @@ export default class ContactForm extends JetView {
 								{
 									paddingX: 20,
 									rows: [
-										{ view:"text", label:"First name", name: "FirstName",
+										{ view:"text", label:_("FirstName"), name: "FirstName",
 											invalidMessage: "\"First name\" must be filled in"  
 										},
-										{ view:"text", label:"Last Name", name: "LastName", 
+										{ view:"text", label:_("LastName"), name: "LastName", 
 											invalidMessage: "\"Last name\" must be filled in"   
 										},
-										{ view:"datepicker", label:"Joining date", name: "StartDate",
+										{ view:"datepicker", label:_("JoiningDate"), name: "StartDate",
 										 value: new Date(),invalidMessage: "\"Date\" must be filled in"   
 										},
 										{ 
 											view: "richselect",
-											label: "Status", 
+											label: _("Status"), 
 											name: "StatusID",
 											invalidMessage: "\"Status\" must be filled in",  
 											options: {
@@ -50,16 +51,16 @@ export default class ContactForm extends JetView {
 												}
 											}
 										},
-										{ view:"text", label:"Job", name: "Job",
+										{ view:"text", label:_("Job"), name: "Job",
 										invalidMessage: "\"Job\" must be filled in"  
 										},
-										{ view:"text", label:"Company", name: "Company",
+										{ view:"text", label:_("Company"), name: "Company",
 										invalidMessage: "\"Company\" must be filled in"  
 										},
-										{ view:"text", label:"Website", name: "Website",
+										{ view:"text", label:_("Website"), name: "Website",
 									
 										},
-										{ view:"textarea", label:"Address", name: "Address",
+										{ view:"textarea", label:_("Address"), name: "Address",
 											invalidMessage: "\"Address name\" must be filled in"  
 										}
 									] 
@@ -67,12 +68,12 @@ export default class ContactForm extends JetView {
 								{
 									paddingX: 20,
 									rows: [
-										{ view:"text", label:"Email", name: "Email",
+										{ view:"text", label:_("Email"), name: "Email",
 											invalidMessage: "\"Email\" must be as name@mail.com"  
 										},
-										{ view:"text", label:"Skype	", name: "Skype" },
-										{ view:"text", label:"Phone", name: "Phone" },
-										{ view:"datepicker", label:"Birthday", name: "Birthday" },
+										{ view:"text", label:_("Skype"), name: "Skype" },
+										{ view:"text", label:_("Phone"), name: "Phone" },
+										{ view:"datepicker", label:_("Birthday"), name: "Birthday" },
 										{
 											paddingY: 10,
 											cols: [
@@ -97,7 +98,7 @@ export default class ContactForm extends JetView {
 														{},
 														{ 
 															view: "uploader",
-															label: "Change photo",
+															label: _("ChangePhoto"),
 															name: "Photo",
 															autosend: false,
 															multiple: false,
@@ -123,7 +124,7 @@ export default class ContactForm extends JetView {
 														},
 														{
 															view: "button",
-															value: "Delete photo", 
+															value: _("DeletePhoto"), 
 															type: "form",
 															click() {
 																const values = _this.getForm().getValues();
@@ -167,7 +168,7 @@ export default class ContactForm extends JetView {
 						{
 							view: "button",
 							borderless: true,
-							label: "Cansel",
+							label: _("Cansel"),
 							width: 100,
 							align: "right",
 							click: () => {

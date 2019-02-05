@@ -1,22 +1,25 @@
 import {JetView} from "webix-jet";
 import ActivitiesToolbar from "./activities/ActivitiesToolbar";
 import ActivitiesDatatable from "./activities/ActivitiesDatatable";
-
+import ActivityFilters from "../components/ActivityFilters";
 import AddEditActivityWindow from "../components/AddEditActivityWindow";
 
 
 export default class ActivitiesView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+
 		return {
 			rows: [
-				ActivitiesToolbar,
-				ActivitiesDatatable
+				{$subview: ActivitiesToolbar, name: "toolbar"},
+				{$subview: new ActivitiesDatatable(this.app, "", _), name: "datatable"}
 			]
 		};
 	}
 
 	ready() {
 		this.windowActivity = this.ui(AddEditActivityWindow);
+		this.filterActivities();
 
 		this.on(this.app, "click:addActivityBtn", () => {
 			this.windowActivity.show();
@@ -33,5 +36,33 @@ export default class ActivitiesView extends JetView {
 				this.app.callEvent("table:updateItem", [formValue.id, formValue]);
 			}
 		});
+	}
+
+	filterActivities(){
+		const toolbar = this.getSubView("toolbar").getRoot().queryView("segmented");
+		const datatable = this.getSubView("datatable").getView();
+		const filter = new ActivityFilters(datatable);
+		this.on(toolbar, "onAfterTabClick", () => {
+			datatable.filterByAll();
+			datatable.registerFilter(
+				toolbar,  
+				{ 
+					compare:function(cellValue, filterValue, obj){
+						return filter[filterValue](obj);
+					}
+				},
+				{ 
+					getValue:function(view){
+						return view.getValue();
+					},
+					setValue:function(view, value){
+						view.setValue(value);
+					}
+				}
+			);
+
+		});
+
+
 	}
 }
