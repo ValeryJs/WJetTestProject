@@ -26,9 +26,12 @@ export default class BaseTable extends JetView {
 
 	static getCheckboxColumn() {
 		return {
-			header: "",
+			header: "",	
+			id: "State",	
 			template: "{common.checkbox()}",
-			width: 40
+			width: 40,
+			uncheckValue: "Open", 
+			checkValue: "Close"
 		};
 	}
 
